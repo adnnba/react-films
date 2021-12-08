@@ -1,8 +1,9 @@
 import { useContext } from "react"
 import { Card, Col, Row } from "react-bootstrap"
+import { Link } from "react-router-dom"
 import FilmsContext from "../utils/FilmsContext"
-
 function MovieList(props) {
+
   const { listTitle, genreType } = props
   const { films } = useContext(FilmsContext)
   let filmsGenre
@@ -23,7 +24,10 @@ function MovieList(props) {
         {filmsGenre.map(film => (
           <Col key={film._id}>
             <Card border="light">
+
+              <Link to={`/film/${film._id}`}>
               <Card.Img variant="top" src={film.poster} height="220px" style={{ borderRadius: "10px" }} />
+              </Link>
               <Card.Body>
                 <Card.Title>{film.title}</Card.Title>
                 <Card.Text className="text-muted">{film.description}</Card.Text>

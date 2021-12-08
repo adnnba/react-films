@@ -5,7 +5,7 @@ function NavbarItem() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Link to="/" className="navbar-brand d-flex align-items-center">
+        <Link to="/"  className="navbar-brand d-flex align-items-center">
           <img
             src="https://storage.googleapis.com/ff-storage-p01/festivals/logos/000/039/385/large/logo.jpg?1498668430"
             width="40"
