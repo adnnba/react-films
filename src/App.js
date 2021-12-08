@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from "./components/Navbar"
+import Home from "./pages/Home"
+import "./App.css"
+import { Route, Routes } from "react-router"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import FilmsContext from "./utils/FilmsContext"
 
 function App() {
+  const [films, setFilms] = useState([])
+
+  const getFilms = async () => {
+    const response = await axios.get("http://localhost:5000/api/films")
+    setFilms(response.data)
+  }
+
+  useEffect(() => {
+    getFilms()
+  }, [])
+
+  const store = {
+    films: films,
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <FilmsContext.Provider value={store}>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </FilmsContext.Provider>
+  )
 }
 
-export default App;
+export default App
