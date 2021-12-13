@@ -6,7 +6,7 @@ import FilmsContext from "../utils/FilmsContext"
 function OneStar(props) {
   const { fill, setFill, starNumber, filmId, setShow } = props
   const { addRating } = useContext(FilmsContext)
-  return fill >= starNumber ? (
+  return starNumber <= fill ? (
     <AiFillStar
       size="25"
       onMouseOver={() => setFill(starNumber)}

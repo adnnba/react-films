@@ -11,11 +11,12 @@ function OneFilm() {
   const { filmId } = useParams()
   const { films, likeFilm, profile } = useContext(FilmsContext)
 
-  if (!profile || films.length === 0) return <h1>Loading...</h1>
+  if (films.length === 0) return <h1>Loading...</h1>
 
   const film = films.find(film => film._id === filmId)
 
-  const liked = film.likes.includes(profile._id)
+  let liked = false
+  if (profile) liked = film.likes.includes(profile._id)
 
   return (
     <>
@@ -58,7 +59,12 @@ function OneFilm() {
           <p>{film.description}</p>
           <h3>Director</h3>
           <p>
-            {film.director.firstName} {film.director.lastName}
+            <Link to={`/director/${film.director._id}`}>
+              <img src={film.director.photo} height={90} />
+              <p style={{ color: "white", textDecoration: "none" }}>
+                {film.director.firstName} {film.director.lastName}
+              </p>
+            </Link>
           </p>
         </Col>
       </Row>

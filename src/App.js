@@ -192,8 +192,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/film/:filmId" element={<OneFilm />} />
-        <Route path="/actor/:actorId" element={<OneCast type="actor" />} />
-        <Route path="/director/:directorId" element={<OneCast type="director" />} />
+        <Route path="/actor/:actorId" element={<OneCast />} />
+        <Route path="/director/:directorId" element={<OneCast />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
