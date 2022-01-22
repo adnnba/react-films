@@ -14,6 +14,9 @@ import OneCast from "./pages/OneCast"
 import AllFilms from "./pages/AllFilms"
 import AllActors from "./pages/AllActors"
 import AllDirectors from "./pages/AllDirectors"
+import EmailVerified from "./pages/EmailVerified"
+import ForgotPassword from "./pages/ForgotPassword"
+import ResetPassword from "./pages/ResetPassword"
 
 function App() {
   const [films, setFilms] = useState([])
@@ -62,9 +65,9 @@ function App() {
 
       await axios.post("http://localhost:5000/api/auth/signup", userBody)
       console.log("signup success")
-      navigate("/login")
+      toast.success("user created, please check your email for verification link")
     } catch (error) {
-      if (error.response) console.log(error.response.data)
+      if (error.response) toast.error(error.response.data)
       else console.log(error)
     }
   }
@@ -170,6 +173,41 @@ function App() {
     }
   }
 
+  const forgotPassword = async e => {
+    e.preventDefault()
+    try {
+      const form = e.target
+      const userBody = {
+        email: form.elements.email.value,
+      }
+      await axios.post("http://localhost:5000/api/auth/forgot-password", userBody)
+      toast.success("password resent link is sent, go check your email")
+    } catch (error) {
+      if (error.response) toast.error(error.response.data)
+      else console.log(error)
+    }
+  }
+
+  const resetPassword = async (e, token) => {
+    e.preventDefault()
+    try {
+      const form = e.target
+      const password = form.elements.password.value
+      const passwordConfirmation = form.elements.passwordConfirmation.value
+      if (password !== passwordConfirmation) return toast.error("password is not matching")
+
+      const userBody = {
+        password,
+      }
+      await axios.post(`http://localhost:5000/api/auth/reset-password/${token}`, userBody)
+      toast.success("password reset")
+      navigate("/login")
+    } catch (error) {
+      if (error.response) toast.error(error.response.data)
+      else console.log(error)
+    }
+  }
+
   const store = {
     films,
     signup,
@@ -182,12 +220,13 @@ function App() {
     addComment,
     actors,
     directors,
+    forgotPassword,
+    resetPassword,
   }
 
   return (
     <FilmsContext.Provider value={store}>
       <ToastContainer />
-
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -200,6 +239,9 @@ function App() {
         <Route path="/films" element={<AllFilms />} />
         <Route path="/actors" element={<AllActors />} />
         <Route path="/directors" element={<AllDirectors />} />
+        <Route path="/email_verified/:token" element={<EmailVerified />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </FilmsContext.Provider>
   )

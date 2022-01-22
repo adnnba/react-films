@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { Form, Col, Row, Button } from "react-bootstrap"
+import { Link } from "react-router-dom"
 import FilmsContext from "../utils/FilmsContext"
 
 function Login() {
@@ -24,6 +25,13 @@ function Login() {
           <Col md="6">
             <Form.Control type="password" name="password" required />
           </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3">
+          <Form.Label column md={{ span: 10, offset: 2 }}>
+            <Link to="/forgot-password" className="btn btn-outline-primary">
+              Forgot password
+            </Link>
+          </Form.Label>
         </Form.Group>
 
         <Form.Group as={Row} className="my-4">
